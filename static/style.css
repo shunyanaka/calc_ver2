@@ -1,0 +1,45 @@
+/* 文字を真ん中に配置 */
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* スタートボタンのフォーム */
+.large-form {
+  font-size: 20px;
+  width: 60px;
+  height: 40px;
+}
+
+/* スタートの文字のフォーム */
+.start-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 入力フォーム */
+.large-input {
+  font-size: 18px;
+  width: 300px;
+  height: 40px;
+}
+
+/* 結果表示のフォーム */
+.result-container {
+  font-size: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* カウントダウン表示のフォーム */
+.countdown-container {
+  font-size: 50px;
+  color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div id="countdown" class="countdown-container">5</div>
+    <script>
+        // カウントダウン表示とフォーム自動送信を制御する関数
+        function startCountdown() {
+            let seconds = 5; //暗算課題を解く制限時間
+            const countdownElement = document.getElementById('countdown');
+            const formElement = document.getElementById('quiz-form');
+
+            const countdownInterval = setInterval(function() {
+                countdownElement.textContent = seconds;
+                seconds--;
+
+                if (seconds < 0) {
+                    clearInterval(countdownInterval);
+                    document.querySelector('form').submit();
+                }
+            }, 1000);
+        }
+        startCountdown();
+
+        // 入力フォームに自動的にフォーカス
+        window.onload = function() {
+            const answerInput = document.querySelector('input[name="answer"]');
+            answerInput.focus();
+        };
+
+    </script>
+
+    <div class="center-container">
+        <p>{{sentence}}</p>
+    </div>
+    <form action="/quiz" method="post">
+        <div class="center-container">
+            <input type="text" name="answer" required class="large-input">
+        <div>
+    </form>
+</body>
+</html>

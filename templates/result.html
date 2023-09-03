@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="result-container">
+        <p>{{ result }}</p>
+    </div>
+    <script>
+        // 1秒後にクイズ画面に戻る処理
+        setTimeout(function() {
+            location.href = '/quiz';
+        }, 1000);
+    </script>
+</body>
+</html>
