@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, redirect, url_for
 app = Flask(__name__)
 
 answer = None
-coutinue_correct = 0
+coutinue_correct = 2
 num = 0
 
 # 最初のスタート画面
@@ -17,8 +17,8 @@ def index():
 def quiz():
     global answer # 計算の答えを記憶
     global num # 今何回目の課題かを記憶
-    global coutinue_correct # 連続で正解している回数を記憶
-    repeat = 5 # 計算を繰り返す回数
+    global coutinue_correct # 連続で正解している回数を記憶(2で初期化)
+    repeat = 8 # 計算を繰り返す回数
 
     if request.method == 'POST':
 
@@ -32,12 +32,12 @@ def quiz():
         if is_correct:
             coutinue_correct += 1
             return redirect(url_for('correct'))
-        # 不正解なら連続正解の数を2減らし、不正解の画面に遷移
+        # 不正解なら連続正解の数を1減らし、不正解の画面に遷移
         else:
-            if coutinue_correct > 1:
-                coutinue_correct -= 2
-            elif coutinue_correct == 1:
+            if coutinue_correct >= 1:
                 coutinue_correct -= 1
+            #elif coutinue_correct == 1:
+            #    coutinue_correct -= 1
             return redirect(url_for('incorrect'))
 
     # 課題が既定の数行ったら、スタート画面に戻る

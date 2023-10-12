@@ -7,15 +7,33 @@
 
 <body>
     <div id="countdown" class="countdown-container">5</div>
+
+    <!-- カウントダウン音 -->
+    <audio id="beep" preload="auto">
+        <!-- <source src="audio/countdown.mp3" type="audio/mp3"> -->
+        <source src="{{ url_for('static', filename='audio/countdown3.mp3') }}" type="audio/mp3">
+
+        <!-- 上記のpath_to_your_soundを適切なパスに変更してください -->
+        Your browser does not support the audio element.
+    </audio>
+
     <script>
         // カウントダウン表示とフォーム自動送信を制御する関数
         function startCountdown() {
             let seconds = 5; //暗算課題を解く制限時間
             const countdownElement = document.getElementById('countdown');
-            const formElement = document.getElementById('quiz-form');
+            //const formElement = document.getElementById('quiz-form');
+            const beepSound = document.getElementById('beep');
 
             const countdownInterval = setInterval(function() {
                 countdownElement.textContent = seconds;
+
+                // 音を再生
+                if(seconds != 5 && seconds != 0){
+                    beepSound.currentTime = 0;
+                    beepSound.play();
+                }
+                
                 seconds--;
 
                 if (seconds < 0) {
