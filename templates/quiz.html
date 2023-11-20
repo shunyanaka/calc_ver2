@@ -12,8 +12,6 @@
     <audio id="beep" preload="auto">
         <!-- <source src="audio/countdown.mp3" type="audio/mp3"> -->
         <source src="{{ url_for('static', filename='audio/countdown3.mp3') }}" type="audio/mp3">
-
-        <!-- 上記のpath_to_your_soundを適切なパスに変更してください -->
         Your browser does not support the audio element.
     </audio>
 
@@ -53,7 +51,7 @@
     </script>
 
     <div class="center-container">
-        <p>{{sentence}}</p>
+        <p class="sentence-container">{{sentence}}</p>
     </div>
     <form action="/quiz" method="post">
         <div class="center-container">

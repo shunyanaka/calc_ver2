@@ -36,8 +36,6 @@ def quiz():
         else:
             if coutinue_correct >= 1:
                 coutinue_correct -= 1
-            #elif coutinue_correct == 1:
-            #    coutinue_correct -= 1
             return redirect(url_for('incorrect'))
 
     # 課題が既定の数行ったら、スタート画面に戻る
@@ -45,15 +43,23 @@ def quiz():
         num = 0
         return render_template('start.html')
 
-    # coutinue_correct(連続正解数)が6以上なら３桁の暗算
-    if coutinue_correct >= 6:
+    # coutinue_correct(正解数)の数に応じて暗算の桁数を変え、難易度を変化させる
+    if coutinue_correct >= 12:
+        random_integer1 = random.randint(1000, 9999)
+        random_integer2 = random.randint(1000, 9999)
+
+    elif coutinue_correct >= 9:
+        random_integer1 = random.randint(1000, 9999)
+        random_integer2 = random.randint(100, 999)
+
+    elif coutinue_correct >= 6:
         random_integer1 = random.randint(100, 999)
         random_integer2 = random.randint(100, 999)
-    # coutinue_correct(連続正解数)が3~5なら３桁と２桁の暗算
+
     elif coutinue_correct >= 3:
         random_integer1 = random.randint(100, 999)
         random_integer2 = random.randint(10, 99)
-    # coutinue_correct(連続正解数)がそれた以下なら２桁の暗算
+
     else:
         random_integer1 = random.randint(10, 99)
         random_integer2 = random.randint(10, 99)
