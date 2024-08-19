@@ -24,19 +24,19 @@ def quiz():
 
         num += 1
 
-        # 正解か不正解を判定する処理を行う
+        # タイムアウトや不正解を判定する処理
         user_answer = request.form['answer']
         is_correct = user_answer == str(answer)
 
-        # 正解なら連続正解の数を1増やし、正解の画面に遷移
-        if is_correct:
-            coutinue_correct += 1
-            return redirect(url_for('correct'))
-        # 不正解なら連続正解の数を1減らし、不正解の画面に遷移
-        else:
+        # タイムアウトまたは不正解なら、連続正解の数を1減らし、不正解の画面に遷移
+        if user_answer == 'timeout' or not is_correct:
             if coutinue_correct >= 1:
                 coutinue_correct -= 1
             return redirect(url_for('incorrect'))
+        # 正解なら連続正解の数を1増やし、正解の画面に遷移
+        else:
+            coutinue_correct += 1
+            return redirect(url_for('correct'))
 
     # 課題が既定の数行ったら、スタート画面に戻る
     if num == repeat:
@@ -69,12 +69,24 @@ def quiz():
 
     if factor == 1:
         answer = random_integer1 + random_integer2
-        return render_template('quiz.html', sentence = f"{random_integer1} + {random_integer2} =")
+        sentence = f"{random_integer1} + {random_integer2} ="
     else:
         if random_integer1 < random_integer2:
             random_integer1, random_integer2 = random_integer2, random_integer1
         answer = random_integer1 - random_integer2
-        return render_template('quiz.html', sentence = f"{random_integer1} - {random_integer2} =")
+        sentence = f"{random_integer1} - {random_integer2} ="
+
+    # 正解を含む選択肢を生成
+    choices = [answer]
+    while len(choices) < 5:
+        fake_answer = answer + random.randint(-10, 10)
+        if fake_answer != answer and fake_answer not in choices:
+            choices.append(fake_answer)
+
+    # 選択肢をランダムにシャッフル
+    random.shuffle(choices)
+
+    return render_template('quiz.html', sentence=sentence, choices=choices)
 
 # 正解画面
 @app.route('/correct')

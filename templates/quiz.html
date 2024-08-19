@@ -3,6 +3,11 @@
 <head>
     <title>Quiz App</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .selected {
+            background-color: yellow; /* 選択されたボタンの色を変える */
+        }
+    </style>
 </head>
 
 <body>
@@ -10,17 +15,16 @@
 
     <!-- カウントダウン音 -->
     <audio id="beep" preload="auto">
-        <!-- <source src="audio/countdown.mp3" type="audio/mp3"> -->
         <source src="{{ url_for('static', filename='audio/countdown3.mp3') }}" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
 
     <script>
-        // カウントダウン表示とフォーム自動送信を制御する関数
+        let selectedAnswer = null; // 選択された解答を記憶する変数
+
         function startCountdown() {
             let seconds = 5; //暗算課題を解く制限時間
             const countdownElement = document.getElementById('countdown');
-            //const formElement = document.getElementById('quiz-form');
             const beepSound = document.getElementById('beep');
 
             const countdownInterval = setInterval(function() {
@@ -36,27 +40,46 @@
 
                 if (seconds < 0) {
                     clearInterval(countdownInterval);
+                    // 5秒後に選択した解答を送信
+                    if (selectedAnswer) {
+                        document.getElementById('selected-answer').value = selectedAnswer;
+                    } else {
+                        document.getElementById('timeout-answer').value = 'timeout';
+                    }
                     document.querySelector('form').submit();
                 }
             }, 1000);
         }
         startCountdown();
 
-        // 入力フォームに自動的にフォーカス
-        window.onload = function() {
-            const answerInput = document.querySelector('input[name="answer"]');
-            answerInput.focus();
-        };
+        // ボタンがクリックされたときに選択された解答を記憶
+        function selectAnswer(choice, buttonElement) {
+            selectedAnswer = choice;
 
+            // すべてのボタンの選択状態をリセット
+            const buttons = document.querySelectorAll('.choice-button');
+            buttons.forEach(btn => btn.classList.remove('selected'));
+
+            // クリックされたボタンを選択状態にする
+            buttonElement.classList.add('selected');
+        }
     </script>
 
     <div class="center-container">
         <p class="sentence-container">{{sentence}}</p>
     </div>
+    
     <form action="/quiz" method="post">
         <div class="center-container">
-            <input type="text" name="answer" required class="large-input">
-        <div>
+            <!-- 選択肢をボタンとして表示 -->
+            {% for choice in choices %}
+                <button type="button" onclick="selectAnswer('{{ choice }}', this)" class="choice-button">{{ choice }}</button>
+            {% endfor %}
+        </div>
+        <!-- 選択された解答を保持するための隠しフィールド -->
+        <input type="hidden" id="selected-answer" name="answer" value="">
+        <!-- タイムアウト用の隠しフィールド -->
+        <input type="hidden" id="timeout-answer" name="answer" value="">
     </form>
 </body>
 </html>
