@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Next</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="next-container">
+        <p>Next</p>
+    </div>
+    <script>
+        // 1秒後に次のクイズ画面に戻る処理
+        setTimeout(function() {
+            location.href = '/quiz';
+        }, 1000);
+    </script>
+</body>
+</html>

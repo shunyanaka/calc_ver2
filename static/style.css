@@ -14,7 +14,7 @@
 
 /* スタートの文字のフォーム */
 .start-container {
-  margin-top: 20px;
+  margin-top: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -58,4 +58,14 @@
   width: 100px;
   height: 60px;
   margin: 10px;
+}
+
+/* Next画面のスタイル */
+.next-container {
+  font-size: 70px;
+  display: flex;
+  justify-content: center;
+  /*align-items: center;*/
+  height: 100vh; /* 画面全体を使用 */
+  margin-top: 0px; /* 文字を上に移動 */
 }
