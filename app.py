@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, redirect, url_for
 app = Flask(__name__)
 
 answer = None
-coutinue_correct = 2
+coutinue_correct = 4
 num = 0
 
 @app.route('/')
@@ -35,7 +35,15 @@ def quiz():
         num = 0
         return render_template('start.html')
 
-    if coutinue_correct >= 12:
+    if coutinue_correct >= 18:
+        random_integer1 = random.randint(10000, 99999)
+        random_integer2 = random.randint(10000, 99999)
+
+    elif coutinue_correct >= 15:
+        random_integer1 = random.randint(10000, 99999)
+        random_integer2 = random.randint(1000, 9999)
+
+    elif coutinue_correct >= 12:
         random_integer1 = random.randint(1000, 9999)
         random_integer2 = random.randint(1000, 9999)
 
@@ -68,8 +76,14 @@ def quiz():
     # 正解とランダムな間違いを含む選択肢を生成
         # 正解を含む選択肢を生成
     choices = [answer]
-    while len(choices) < 5:
-        fake_answer = answer + random.randint(-10, 10)
+    randam_number = random.randint(0, 1)
+    if randam_number == 0:
+        ten_answer = answer - 10
+    else:
+        ten_answer = answer + 10
+    choices.append(ten_answer)
+    while len(choices) < 8:
+        fake_answer = answer + random.randint(-20, 20)
         if fake_answer != answer and fake_answer not in choices:
             choices.append(fake_answer)
     random.shuffle(choices)  # 選択肢をシャッフル

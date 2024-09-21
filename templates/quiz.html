@@ -7,6 +7,23 @@
         .selected {
             background-color: yellow; /* 選択されたボタンの色を変える */
         }
+
+        /* ボタンを2行に分けて並べるためのスタイル */
+        .choices-container {
+            display: grid;
+            grid-template-columns: repeat(4, auto); /* 1行に5つのボタンを配置 */
+            gap: 10px; /* ボタン間の隙間を調整 */
+            justify-content: center; /* ボタン全体を中央寄せ */
+            max-width: 600px; /* コンテナの幅を制限して中央寄せ */
+            margin: 0 auto; /* 左右の余白を自動にして中央に配置 */
+        }
+
+        /*
+        .choice-button {
+            width: 80px; /* ボタンの幅を固定 */
+           /* height: 50px; /* ボタンの高さを固定 */
+        /*}*/
+        
     </style>
 </head>
 
@@ -15,7 +32,7 @@
 
     <!-- カウントダウン音 -->
     <audio id="beep" preload="auto">
-        <source src="{{ url_for('static', filename='audio/countdown3.mp3') }}" type="audio/mp3">
+        <source src="{{ url_for('static', filename='audio/countdown2.mp3') }}" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
 
@@ -70,7 +87,7 @@
     </div>
     
     <form action="/quiz" method="post">
-        <div class="center-container">
+        <div class="center-container choices-container">
             <!-- 選択肢をボタンとして表示 -->
             {% for choice in choices %}
                 <button type="button" onclick="selectAnswer('{{ choice }}', this)" class="choice-button">{{ choice }}</button>
